@@ -1,0 +1,15 @@
+{
+  "short_name": "PoCFase0",
+  "name": "PoC Clúster PWA",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#007bff",
+  "display": "standalone"
+}

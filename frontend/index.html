@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.json">
+  <title>PoC Fase 0 - PWA</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; text-align: center;}
+    .card { border: 1px solid #4296c7; padding: 1.5rem; border-radius: 8px; margin-top: 1rem; }
+    button { padding: 0.5rem 1rem; font-size: 1rem; cursor: pointer; }
+
+  </style>
+</head>
+<body>
+  <h1>Prueba de Concepto - Fase 0</h1>
+  <p>PPI115 -   Docente: Ing. Carlos Balmore</p>
+  <p><b>Grupo: 08</b><br><br>Integrantes: <br>
+  <br>KELVIN JAIR ZACARÍAS CANDRAY		              ZC23006
+  <br>JOSE NAPOLEON BOLAÑOS FLORES                  BF24010
+  <br>EDUARDO ERNESTO RIVAS AGUILAR                 RA19027
+  <br>ERICK GEOVANY GARCÍA SANCHEZ                  GS25016
+ </p>
+  <button onclick="fetchNodeInfo()">Consultar Backend</button>
+
+  <div class="card">
+    <p><strong>Nodo que respondió:</strong> <span id="node-name">-</span></p>
+    <p><strong>Visitas registradas en sesión:</strong> <span id="session-views">-</span></p>
+    <p><strong>ID de Sesión (Compartida):</strong> <span id="session-id">-</span></p>
+  </div>
+
+  <script>
+    // Registro del Service Worker para soporte PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Service Worker registrado correctamente'));
+    }
+
+    async function fetchNodeInfo() {
+      try {
+        const res = await fetch('/api/v1/info');
+        const data = await res.json();
+        document.getElementById('node-name').innerText = data.node;
+        document.getElementById('session-views').innerText = data.views;
+        document.getElementById('session-id').innerText = data.sessionId;
+      } catch (err) {
+        console.error('Error al consultar la API:', err);
+      }
+    }
+  </script>
+</body>
+</html>
