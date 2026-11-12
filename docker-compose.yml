@@ -1,33 +1,36 @@
-version: '3.8'
-
 services:
-  redis-server:
+  redis:
     image: redis:alpine
     container_name: redis-cluster
+    ports:
+      - "6379:6379"
 
   backend1:
     build: ./backend
     environment:
-      - PORT=3000
       - NODE_NAME=Nodo-01
-      - REDIS_URL=redis://redis-server:6379
-      - APP_ENV=intranet
+      - NODE_IP=127.0.0.1
+      - PORT=3000
+    depends_on:
+      - redis
 
   backend2:
     build: ./backend
     environment:
-      - PORT=3000
       - NODE_NAME=Nodo-02
-      - REDIS_URL=redis://redis-server:6379
-      - APP_ENV=intranet
+      - NODE_IP=127.0.0.2
+      - PORT=3000
+    depends_on:
+      - redis
 
   backend3:
     build: ./backend
     environment:
-      - PORT=3000
       - NODE_NAME=Nodo-03
-      - REDIS_URL=redis://redis-server:6379
-      - APP_ENV=intranet
+      - NODE_IP=127.0.0.3
+      - PORT=3000
+    depends_on:
+      - redis
 
   frontend-proxy:
     image: nginx:alpine
